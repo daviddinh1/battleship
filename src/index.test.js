@@ -34,3 +34,19 @@ test("does the sunk function check if the ship has sunk", () => {
 test("does the gameBoard class exist", () => {
   expect(GameBoard).toBeDefined();
 });
+
+test("does the gameboard class have a gameboard 2d array", () => {
+  const gb = new GameBoard();
+  const rows = 10;
+  const cols = 10;
+
+  const gridToBe = [];
+  for (let i = 0; i < rows; i++) {
+    let row = [];
+    for (let j = 0; j < cols; j++) {
+      row.push(0);
+    }
+    gridToBe.push(row);
+  }
+  expect(gb.grid).toEqual(gridToBe);
+});

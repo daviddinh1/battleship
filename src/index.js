@@ -19,6 +19,23 @@ class battleShip {
   }
 }
 
-class GameBoard {}
+class GameBoard {
+  constructor() {
+    this.grid = this.initializeGrid();
+  }
+  initializeGrid() {
+    const rows = 10;
+    const cols = 10;
+    let gameB = [];
+    for (let i = 0; i < rows; i++) {
+      let row = [];
+      for (let j = 0; j < cols; j++) {
+        row.push(0);
+      }
+      gameB.push(row);
+    }
+    return gameB;
+  }
+}
 
 module.exports = { battleShip, GameBoard };
