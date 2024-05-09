@@ -68,23 +68,11 @@ class GameBoard {
 }
 
 class Player {
-  constructor(opponent) {
-    this.opponent = opponent;
+  constructor() {
     this.gameboard = new GameBoard();
   }
-  attack(opponent, x, y) {
+  attack(x, y) {
     return this.gameboard.receiveAttack(x, y);
-  }
-  randomAttack(opponent) {
-    let x, y;
-    do {
-      x = Math.floor(Math.random() * 10);
-      y = Math.floor(Math.random() * 10);
-    } while (
-      opponent.gameboard.grid[x][y] === "h" ||
-      opponent.gameboard.grid[x][y] === "m"
-    );
-    return this.attack(opponent, x, y);
   }
 }
 //every other player can use the actions of the gameboard

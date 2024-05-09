@@ -39,3 +39,7 @@
  padding-bottom: 100%;
  /* keep the aspect ratio 1:1 */
 }
+
+.hover{
+ background-color: lightgreen;
+}
