@@ -5,8 +5,7 @@ const { BattleShip, GameBoard, Player } = require("./classes");
 const player1 = new Player(true);
 const player2 = new Player(false);
 
-player1.gameboard.place(2, 2, 3, true);
-player1.gameboard.place(5, 0, 3, false);
+const btn = document.querySelector("#btn");
 
 player2.gameboard.place(3, 2, 3, true);
 player2.gameboard.place(5, 1, 3, false);
@@ -36,6 +35,8 @@ for (let i = 0; i < 10; i++) {
     gridBlock.classList.add("gridBlock");
     gridBlock.dataset.row = i;
     gridBlock.dataset.col = j;
+    randCord(btn, gridBlock);
+
     grid1.appendChild(gridBlock);
   }
 }
@@ -51,7 +52,6 @@ for (let i = 0; i < 10; i++) {
 
     gridBlock.addEventListener("click", gameFunctionalityPlayer);
     gridBlock.addEventListener("click", gameFunctionalityComp);
-
     grid2.appendChild(gridBlock);
   }
 }
@@ -72,13 +72,17 @@ function addHoverEffect(block) {
 //hover over them and click them to place a attack
 function gameFunctionalityPlayer(event) {
   //figure out a way to not include it here or seperate the game logic?
-  player1.gameboard.receiveAttack(
-    event.target.dataset.row,
-    event.target.dataset.col
-  );
-  event.target.style.backgroundColor = "lightgrey";
+  let x = event.target.dataset.row;
+  let y = event.target.dataset.col;
+  player1.gameboard.receiveAttack(x, y);
+  if (player1.gameboard.grid[x][y] == "h") {
+    event.target.style.backgroundColor = "#FFCCCB";
+  } else {
+    event.target.style.backgroundColor = "lightgrey";
+  }
   event.target.dataset.clicked = "true"; // Mark as clicked
   console.log(player1.gameboard.grid);
+  gameEnd();
 }
 
 function gameFunctionalityComp() {
@@ -89,6 +93,49 @@ function gameFunctionalityComp() {
   let element = document.querySelector(
     `.gridBlock[data-row='${x}'][data-col='${y}']`
   );
-  element.style.backgroundColor = "lightgrey";
+  if (player2.gameboard.grid[x][y] == "h") {
+    element.style.backgroundColor = "#FFCCCB";
+  } else {
+    element.style.backgroundColor = "lightgrey";
+  }
   console.log(player2.gameboard.grid);
+  gameEnd();
+}
+
+function gameEnd() {
+  //add pop up
+  if (player1.gameboard.allShipsSunk() === true) {
+    console.log("you won!!");
+  } else if (player2.gameboard.allShipsSunk() === true) {
+    console.log("you lost!");
+  }
+}
+
+function randCord(btn, gridBlock) {
+  btn.addEventListener("click", () => {
+    let x, y, z;
+
+    for (let i = 0; i < 4; i++) {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+      z = Math.floor(Math.random() * (3 - 1) + 1);
+      if (i % 2 == 0) {
+        player1.gameboard.place(x, y, z, true);
+        for (let i = 0; i < z; i++) {
+          let element = document.querySelector(
+            `.gridBlock[data-row='${x}'][data-col='${y + i}']`
+          );
+          element.style.backgroundColor = "green";
+        }
+      } else {
+        player1.gameboard.place(x, y, z, false);
+        for (let i = 0; i < z; i++) {
+          let element = document.querySelector(
+            `.gridBlock[data-row='${x + i}'][data-col='${y}']`
+          );
+          element.style.backgroundColor = "green";
+        }
+      }
+    }
+  });
 }
