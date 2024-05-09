@@ -35,7 +35,6 @@ for (let i = 0; i < 10; i++) {
     gridBlock.classList.add("gridBlock");
     gridBlock.dataset.row = i;
     gridBlock.dataset.col = j;
-    randCord(btn, gridBlock);
 
     grid1.appendChild(gridBlock);
   }
@@ -111,11 +110,10 @@ function gameEnd() {
   }
 }
 
-function randCord(btn, gridBlock) {
+function randCord(btn) {
   btn.addEventListener("click", () => {
     let x, y, z;
-
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       x = Math.floor(Math.random() * 10);
       y = Math.floor(Math.random() * 10);
       z = Math.floor(Math.random() * (3 - 1) + 1);
@@ -136,6 +134,19 @@ function randCord(btn, gridBlock) {
           element.style.backgroundColor = "green";
         }
       }
+
+      for (let i = 0; i < 5; i++) {
+        x = Math.floor(Math.random() * 10);
+        y = Math.floor(Math.random() * 10);
+        z = Math.floor(Math.random() * (3 - 1) + 1);
+        if (i % 2 == 0) {
+          player2.gameboard.place(x, y, z, true);
+        } else {
+          player2.gameboard.place(x, y, z, false);
+        }
+      }
     }
   });
 }
+
+randCord(btn);
