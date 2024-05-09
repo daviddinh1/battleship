@@ -1,71 +1,43 @@
 import "./style.css";
 
-class BattleShip {
-  constructor(length) {
-    this.length = length;
-    this.hp = 0;
-    this.ifHit = false;
-  }
+const { BattleShip, GameBoard, Player } = require("./classes");
 
-  hit() {
-    if (this.hp < this.length) {
-      this.hp += 1;
-    }
-    this.isSunk();
-    return this.hp;
-  }
+const player1 = new Player(true);
+const player2 = new Player(false);
 
-  isSunk() {
-    if (this.hp === this.length) {
-      this.ifHit = true;
-    }
-    return this.ifHit;
-  }
+player1.gameboard.place(2, 2, 3, true);
+player1.gameboard.place(5, 0, 3, false);
+
+player2.gameboard.place(3, 2, 3, true);
+player2.gameboard.place(5, 1, 3, false);
+
+/*
+player1.gameboard.receiveAttack(2, 2);
+player1.gameboard.receiveAttack(2, 3);
+player1.gameboard.receiveAttack(2, 4);
+player1.gameboard.receiveAttack(5, 0);
+player1.gameboard.receiveAttack(6, 0);
+player1.gameboard.receiveAttack(7, 0);
+*/
+
+/*
+console.log(player1.gameboard.grid);
+console.log(player1.gameboard.allShipsSunk());
+*/
+
+//first create the grids
+const grid1 = document.querySelector("#playerGrid");
+const grid2 = document.querySelector("#compGrid");
+grid1.setAttribute("id", "playerGrid");
+
+for (let i = 0; i < 100; i++) {
+  const gridBlock = document.createElement("div");
+  gridBlock.classList.add("gridBlock");
+  grid1.appendChild(gridBlock);
 }
 
-class GameBoard {
-  constructor() {
-    this.grid = this.initializeGrid();
-    this.ships = [];
-  }
-
-  initializeGrid() {
-    const rows = 10;
-    const cols = 10;
-    return Array.from({ length: rows }, () => Array(cols).fill(null));
-  }
-
-  place(x, y, length, horizontal = true) {
-    const ship = new BattleShip(length);
-    this.ships.push(ship);
-
-    for (let i = 0; i < length; i++) {
-      if (horizontal) {
-        this.grid[x][y + i] = ship;
-      } else {
-        this.grid[x + i][y] = ship;
-      }
-    }
-  }
-
-  receiveAttack(x, y) {
-    const cell = this.grid[x][y];
-    if (cell instanceof BattleShip) {
-      cell.hit();
-      this.grid[x][y] = "h"; // Mark the grid cell as hit
-      return true;
-    } else if (this.grid[x][y] === null) {
-      this.grid[x][y] = "m"; // Mark the grid cell as miss
-      return false;
-    } else if (this.grid[x][y] === "h" || this.grid[x][y] === "m") {
-      // Cell was already attacked
-      return false;
-    }
-  }
-
-  allShipsSunk() {
-    return this.ships.every((ship) => ship.isSunk());
-  }
+for (let i = 0; i < 100; i++) {
+  const gridBlock = document.createElement("div");
+  gridBlock.classList.add("gridBlock");
+  grid2.appendChild(gridBlock);
 }
-
-module.exports = { BattleShip, GameBoard };

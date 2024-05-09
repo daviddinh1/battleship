@@ -1,0 +1,41 @@
+.container{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ gap: 100px;
+}
+
+
+#playerGrid {
+ display: grid;
+ grid-template-columns: repeat(10, 1fr);
+ grid-template-rows: repeat(10, 1fr);
+ width: 100vw;
+ /* or a relative unit like % if you want to fit a parent element */
+ max-width: 300px;
+ /* max width to keep it within reasonable size */
+ height: auto;
+ /* let the height adjust according to the width */
+}
+
+#compGrid{
+  display: grid;
+   grid-template-columns: repeat(10, 1fr);
+   grid-template-rows: repeat(10, 1fr);
+   width: 100vw;
+   /* or a relative unit like % if you want to fit a parent element */
+   max-width: 300px;
+   /* max width to keep it within reasonable size */
+   height: auto;
+   /* let the height adjust according to the width */
+}
+
+.gridBlock {
+ background-color: white;
+ border: 1px solid black;
+ width: 100%;
+ /* make it take the full width of the grid cell */
+ height: 0;
+ padding-bottom: 100%;
+ /* keep the aspect ratio 1:1 */
+}

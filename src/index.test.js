@@ -1,4 +1,4 @@
-const { BattleShip, GameBoard } = require("./index.js");
+const { BattleShip, GameBoard } = require("./classes.js");
 
 describe("BattleShip", () => {
   it("should correctly record hits", () => {
