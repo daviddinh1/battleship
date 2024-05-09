@@ -7,9 +7,16 @@ const player2 = new Player(false);
 
 const btn = document.querySelector("#btn");
 
+//initial game state
+player1.gameboard.place(0, 2, 3, true);
+player1.gameboard.place(5, 0, 3, false);
+player1.gameboard.place(9, 1, 2, true);
+player1.gameboard.place(4, 2, 2, true);
+
 player2.gameboard.place(3, 2, 3, true);
 player2.gameboard.place(5, 1, 3, false);
-
+player2.gameboard.place(5, 6, 4, false);
+player2.gameboard.place(9, 9, 1, true);
 /*
 player1.gameboard.receiveAttack(2, 2);
 player1.gameboard.receiveAttack(2, 3);
@@ -35,7 +42,9 @@ for (let i = 0; i < 10; i++) {
     gridBlock.classList.add("gridBlock");
     gridBlock.dataset.row = i;
     gridBlock.dataset.col = j;
-
+    if (player1.gameboard.grid[i][j] instanceof BattleShip) {
+      gridBlock.style.backgroundColor = "green";
+    }
     grid1.appendChild(gridBlock);
   }
 }
@@ -103,10 +112,12 @@ function gameFunctionalityComp() {
 
 function gameEnd() {
   //add pop up
+  const modal = document.querySelector("#modalWinner");
+  const modalLose = document.querySelector("#modalLoser");
   if (player1.gameboard.allShipsSunk() === true) {
-    console.log("you won!!");
+    modal.style.display = "block";
   } else if (player2.gameboard.allShipsSunk() === true) {
-    console.log("you lost!");
+    modalLose.style.display = "block";
   }
 }
 
@@ -150,3 +161,4 @@ function randCord(btn) {
 }
 
 randCord(btn);
+console.log(player2.gameboard.grid);
